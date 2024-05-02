@@ -322,7 +322,7 @@ body {
   }
 }
 
-.ferris-link {
+.ferris-link a {
    color: red;
    text-decoration: none;
    font-size: 6rem;
