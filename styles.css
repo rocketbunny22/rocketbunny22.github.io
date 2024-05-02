@@ -322,10 +322,12 @@ body {
   }
 }
 
-.ferris-link a {
+footer .ferris-link a {
    color: red;
    text-decoration: none;
    font-size: 6rem;
+   z-index: 999;
+   
 }
 
 
