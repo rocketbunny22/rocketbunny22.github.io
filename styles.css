@@ -332,7 +332,12 @@ body {
 
 
 
-// Ferris wheel animation
+/* Ferris wheel animation */
+
+* {
+ background-color: #000:   
+}
+
 .wheel {
   border: 2px solid black;
   border-radius: 50%;
