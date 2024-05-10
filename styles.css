@@ -19,6 +19,12 @@ body {
   overflow: hidden;
 }
 
+button {
+   background-color: red;
+   width: 15px;
+   height: 5px;
+}  
+
 .background-buildings, .foreground-buildings {
   width: 100%;
   height: 100%;
