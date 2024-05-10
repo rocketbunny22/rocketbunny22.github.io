@@ -23,6 +23,7 @@ button {
    background-color: red;
    width: 15px;
    height: 5px;
+   z-index: 50;
 }  
 
 .background-buildings, .foreground-buildings {
