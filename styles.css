@@ -29,7 +29,7 @@ button {
 
 button a {
    font-size: 15px;
-   color: white;
+   color: white!important;
    font-weight: bold;
 }
 
