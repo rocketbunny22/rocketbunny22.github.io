@@ -27,11 +27,13 @@ button {
   border: 3px solid #feac32;
 }
 
-.button  {
-   cursor: pointer;
-   font-size: 15px;
-   color: white!important;
-   font-weight: bold;
+.button {
+    /* Add your button styles here */
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    text-decoration: none;
 }
 
 .background-buildings, .foreground-buildings {
