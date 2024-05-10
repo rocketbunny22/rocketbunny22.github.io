@@ -20,11 +20,18 @@ body {
 }
 
 button {
-   background-color: red;
-   width: 15px;
-   height: 5px;
-   z-index: 50;
-}  
+  cursor: pointer;
+  color: #0a0a23;
+  background-color: #feac32;
+  background-image: linear-gradient(#fecc4c, #ffac33);
+  border: 3px solid #feac32;
+}
+
+button a {
+   font-size: 15px;
+   color: white;
+   font-weight: bold;
+}
 
 .background-buildings, .foreground-buildings {
   width: 100%;
