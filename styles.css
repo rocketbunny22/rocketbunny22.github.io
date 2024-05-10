@@ -30,10 +30,10 @@ body {
 
 .button {
     /* Add your button styles here */
-    z-index: 999;
-    display: inline-block;
+    z-index: 999!important;
+    display: inline-block!important;
     padding: 10px 20px;
-    background-color: red;
+    background-color: red!important;
     color: white;
     text-decoration: none;
 }
