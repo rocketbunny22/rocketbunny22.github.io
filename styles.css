@@ -27,7 +27,8 @@ button {
   border: 3px solid #feac32;
 }
 
-button a {
+.button  {
+   cursor: pointer;
    font-size: 15px;
    color: white!important;
    font-weight: bold;
