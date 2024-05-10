@@ -329,7 +329,7 @@ button {
   }
 }
 
-footer .ferris-link a {
+.ferris-link  {
    color: red;
    text-decoration: none;
    font-size: 6rem;
