@@ -2,8 +2,7 @@ html {
             background-image: url(https://images.pexels.com/photos/1175136/pexels-photo-1175136.jpeg);
 }
 .button {
-            display: flex;
-            justify-content: center;
+            display: inline-block;
             padding: 10px 20px;
             font-size: 16px;
             color: white;
