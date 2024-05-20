@@ -10,3 +10,11 @@ html {
             text-align: center;
             text-decoration: none;
             border-radius: 5px;
+}
+
+.button-div {
+            background-color: black;
+            display: flex;
+            justify-content: center
+            
+}
