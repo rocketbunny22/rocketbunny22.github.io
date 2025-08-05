@@ -19,30 +19,6 @@ A professional static website for Grounded Cyber, a cybersecurity company. This 
 - **Contact**: Contact form and company details
 - **Footer**: Additional links and information
 
-## Deployment to GitHub Pages
-
-1. Create a new repository on GitHub
-2. Upload all files to the repository
-3. Go to repository Settings > Pages
-4. Select "Deploy from a branch" and choose "main" branch
-5. Your site will be available at `https://yourusername.github.io/repository-name`
-
-## Customization
-
-- Update company information in `index.html`
-- Modify colors in `styles.css` (CSS variables at the top)
-- Add your actual contact information
-- Replace placeholder content with your specific services
-- Add your company logo by replacing the SVG in the hero section
-
-## File Structure
-
-\`\`\`
-├── index.html          # Main HTML file
-├── styles.css          # All CSS styles
-├── script.js           # JavaScript functionality
-└── README.md           # This file
-\`\`\`
 
 ## Browser Support
 
