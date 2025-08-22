@@ -29,6 +29,12 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   })
 })
 
+// Import EmailJS library
+const emailjs = window.emailjs
+
+// Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+emailjs.init("QuuQqvXLpN0s4fL6J")
+
 // Form submission handler
 const contactForm = document.querySelector(".contact-form")
 contactForm.addEventListener("submit", function (e) {
@@ -47,9 +53,37 @@ contactForm.addEventListener("submit", function (e) {
     return
   }
 
-  // Simulate form submission
-  alert("Thank you for your message! We will get back to you within 24 hours.")
-  this.reset()
+  // Show loading state
+  const submitButton = this.querySelector('button[type="submit"]')
+  const originalText = submitButton.textContent
+  submitButton.textContent = "Sending..."
+  submitButton.disabled = true
+
+  // Send email using EmailJS
+  // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS service and template IDs
+  emailjs
+    .send("service_8dwll8f", "template_05hi9ng", {
+      from_name: name,
+      from_email: email,
+      company: company || "Not specified",
+      message: message,
+      to_email: "groundedcyber@gmail.com", // This should match your EmailJS template
+    })
+    .then(() => {
+      alert("Thank you for your message! We will get back to you within 24 hours.")
+      this.reset()
+    })
+    .catch((error) => {
+      console.error("EmailJS Error:", error)
+      alert(
+        "Sorry, there was an error sending your message. Please try again or contact us directly at groundedcyber@gmail.com",
+      )
+    })
+    .finally(() => {
+      // Reset button state
+      submitButton.textContent = originalText
+      submitButton.disabled = false
+    })
 })
 
 // Add scroll effect to header
