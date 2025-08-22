@@ -29,11 +29,8 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   })
 })
 
-// Import EmailJS library
-const emailjs = window.emailjs
-
 // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
-emailjs.init("QuuQqvXLpN0s4fL6J")
+window.emailjs.init("QuuQqvXLpN0s4fL6J")
 
 // Form submission handler
 const contactForm = document.querySelector(".contact-form")
@@ -61,7 +58,7 @@ contactForm.addEventListener("submit", function (e) {
 
   // Send email using EmailJS
   // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS service and template IDs
-  emailjs
+  window.emailjs
     .send("service_8dwll8f", "template_05hi9ng", {
       from_name: name,
       from_email: email,
