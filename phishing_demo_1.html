@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phishing Awareness Demo</title>
+  <style>
+    :root {
+      --bg: #f0f4f9;
+      --card: #ffffff;
+      --text: #1f1f1f;
+      --muted: #5f6368;
+      --blue: #0b57d0;
+      --border: #dadce0;
+      --danger: #b3261e;
+      --warn-bg: #fce8e6;
+      --good-bg: #e6f4ea;
+      --good: #137333;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #eaf2ff 0%, var(--bg) 35%, #eef3f8 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1180px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: 0 8px 30px rgba(32, 33, 36, 0.08);
+    }
+
+    .demo-card {
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .training-banner {
+      margin-bottom: 16px;
+      border: 2px solid var(--danger);
+      background: var(--warn-bg);
+      color: var(--danger);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.2px;
+    }
+
+    .browser {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .browser-top {
+      background: #f8f9fa;
+      border-bottom: 1px solid var(--border);
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #c4c7c5;
+    }
+
+    .address-bar {
+      flex: 1;
+      background: #eef3fd;
+      border: 1px solid #d2e3fc;
+      color: #8d2d25;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .browser-content {
+      padding: 18px;
+      background: #f8fbff;
+    }
+
+    .email-lure {
+      border: 1px solid #f3c7c3;
+      background: #fff8f7;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .email-lure .from {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .email-lure .subject {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .email-lure .body {
+      color: #3c4043;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .fake-login {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 36px 32px 28px;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.6px;
+      margin-bottom: 12px;
+    }
+
+    .logo .b { color: #4285f4; }
+    .logo .r { color: #db4437; }
+    .logo .y { color: #f4b400; }
+    .logo .g { color: #4285f4; }
+    .logo .g2 { color: #0f9d58; }
+    .logo .r2 { color: #db4437; }
+
+    .login-title {
+      font-size: 32px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .login-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .danger-callout {
+      background: #fff5f5;
+      border: 1px solid #f1c0c0;
+      color: var(--danger);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .field {
+      width: 100%;
+      padding: 16px 14px;
+      border: 1px solid #a8c7fa;
+      border-radius: 4px;
+      font-size: 16px;
+      margin-bottom: 14px;
+      outline: none;
+      background: #fff;
+    }
+
+    .small-link {
+      color: var(--blue);
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .helper {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .btn-link {
+      background: transparent;
+      border: none;
+      color: var(--blue);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px 8px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      border: none;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 999px;
+      padding: 11px 24px;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.16);
+    }
+
+    .panel {
+      padding: 24px;
+    }
+
+    .panel h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .panel p.lead {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .score {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--good-bg);
+      color: var(--good);
+      border: 1px solid #c6e7cb;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .flags {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .flag {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .flag-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #e8f0fe;
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .flag h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+    }
+
+    .flag p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .teacher-box {
+      margin-top: 12px;
+      background: #f8f9fa;
+      border: 1px dashed #bcc0c4;
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .teacher-box h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .teacher-box ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #3c4043;
+      line-height: 1.5;
+    }
+
+    .reveal {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .reveal button {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 16px;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 15px;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result.bad {
+      background: #fff5f5;
+      border: 1px solid #f1c0c0;
+      color: #7a1f18;
+    }
+
+    .result.good {
+      background: #eef7ee;
+      border: 1px solid #c7e4cb;
+      color: #1f5f2d;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 980px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 12px; }
+      .demo-card, .panel { padding: 14px; }
+      .fake-login { padding: 24px 18px; }
+      .login-title { font-size: 26px; }
+      .panel h2 { font-size: 24px; }
+      .actions { flex-direction: column; align-items: stretch; }
+      .btn-primary { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="card demo-card">
+      <div class="browser">
+        <div class="browser-top">
+          <div class="dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <div class="address-bar">Not secure — http://accounts.google.verify-school-portal-example.net/login</div>
+        </div>
+
+        <div class="browser-content">
+          <div class="email-lure">
+            <div class="from"><strong>From:</strong> School IT Support &lt;urgent-access@school-reset-help.net&gt;</div>
+            <div class="subject">Urgent: Your school account will be disabled today</div>
+            <div class="body">
+              We detected unusual activity on your student account. To avoid losing access to grades, email, and files,
+              please sign in immediately and verify your account within <strong>30 minutes</strong>.
+            </div>
+          </div>
+
+          <div class="fake-login">
+            <div class="logo" aria-label="Google-style logo">
+              <span class="b">G</span><span class="r">o</span><span class="y">o</span><span class="g">g</span><span class="g2">l</span><span class="r2">e</span>
+            </div>
+            <div class="login-title">Sign in</div>
+            <div class="login-subtitle">Use your Google Account to restore school access</div>
+            <div class="danger-callout">Immediate action required: account deletion warning</div>
+            <input class="field" type="email" placeholder="Email or phone" aria-label="Email or phone" />
+            <a class="small-link">Forgot email?</a>
+            <div class="helper">
+              This device is not trusted. Re-enter your password to prevent permanent lockout and keep your school account active.
+            </div>
+            <input class="field" type="password" placeholder="Enter your password" aria-label="Password" />
+            <div class="actions">
+              <button class="btn-link" type="button">Create account</button>
+              <button class="btn-primary" type="button" id="nextBtn">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside id="teachPanel" style="display: none;" class="card panel">
+      <h2>Why this page should not be trusted</h2>
+      <p class="lead">
+        This is a harmless offline awareness demo for a school presentation. It is built to help students spot phishing signs
+        without collecting any information.
+      </p>
+
+      <div class="flags">
+        <div class="flag">
+          <div class="flag-num">1</div>
+          <div>
+            <h3>Suspicious web address</h3>
+            <p>The domain is not actually google.com. Attackers often hide the real domain in a long address.</p>
+          </div>
+        </div>
+
+        <div class="flag">
+          <div class="flag-num">2</div>
+          <div>
+            <h3>“Not secure” warning</h3>
+            <p>A sign-in page asking for a password should never look untrusted or insecure.</p>
+          </div>
+        </div>
+
+        <div class="flag">
+          <div class="flag-num">3</div>
+          <div>
+            <h3>Urgent scare tactics</h3>
+            <p>Messages like “disabled today” and “30 minutes” try to make people panic instead of think.</p>
+          </div>
+        </div>
+
+        <div class="flag">
+          <div class="flag-num">4</div>
+          <div>
+            <h3>Unusual sender</h3>
+            <p>The fake email sender is not a normal school or Google address.</p>
+          </div>
+        </div>
+
+        <div class="flag">
+          <div class="flag-num">5</div>
+          <div>
+            <h3>Unexpected password request</h3>
+            <p>If you got here from a link in an email or text, entering your password could hand it to an attacker.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <button type="button" id="revealBtn">Reveal the lesson</button>
+        <button type="button" id="resetBtn">Reset</button>
+      </div>
+
+      <div class="result bad" id="badResult">
+        If this were a real phishing page, typing a password here could give an attacker access to school email, cloud files,
+        saved passwords, and any other account that reused the same password.
+      </div>
+
+      <div class="result good" id="goodResult">
+        Correct response: do not sign in from the link. Instead, open a new browser tab and go directly to the real website,
+        or contact your school using a known trusted method.
+      </div>
+
+      <div class="footer-note">
+        Offline classroom demo. No data is collected, saved, or transmitted.
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const nextBtn = document.getElementById('nextBtn');
+    const revealBtn = document.getElementById('revealBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const badResult = document.getElementById('teachPanel');
+    const goodResult = document.getElementById('goodResult');
+    const fields = document.querySelectorAll('.field');
+
+    function showTeachingPoints() {
+      badResult.style.display = "block";
+    }
+
+    function resetDemo() {
+      badResult.style.display = "none";
+      goodResult.classList.remove('show');
+      fields.forEach(field => field.value = '');
+    }
+
+    nextBtn.addEventListener('click', showTeachingPoints);
+    revealBtn.addEventListener('click', showTeachingPoints);
+    resetBtn.addEventListener('click', resetDemo);
+  </script>
+</body>
+</html>
