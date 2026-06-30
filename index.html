@@ -1,224 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grounded Cyber - Cybersecurity Solutions</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <img src="https://grabify.link/S4CQN3">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Personal bio and resume site for Your Name.">
+  <title>Your Name | Bio and Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
-            <div class="nav-container">
-                <div class="nav-brand">
-                    <!-- <div class="logo-img"><img src="/shield_in_word.jpeg"></div> -->
-                    <h2>Grounded Cyber</h2>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="#home" class="nav-link">Home</a></li>
-                    <li><a href="#services" class="nav-link">Services</a></li>
-                    <li><a href="#about" class="nav-link">About</a></li>
-                    <li><a href="#contact" class="nav-link">Contact</a></li>
-                </ul>
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-        </nav>
-    </header>
+  <header class="site-header">
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="site-nav__brand" href="#top" aria-label="Your Name home">
+        <span class="site-nav__mark" aria-hidden="true">YN</span>
+        <span class="site-nav__name">Your Name</span>
+      </a>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="hero-container">
-                <div class="hero-content">
-                    <h1 class="hero-title">Secure Your Digital Future</h1>
-                    <p class="hero-subtitle">Grounded Cyber provides comprehensive cybersecurity solutions to protect your business from evolving digital threats.</p>
-                    <div class="hero-buttons">
-                        <a href="#contact" class="btn btn-primary">Get Started</a>
-                        <a href="#services" class="btn btn-secondary">Our Services</a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <div class="security-icon">
-                        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M100 20L160 50V100C160 140 130 170 100 180C70 170 40 140 40 100V50L100 20Z" fill="url(#gradient)" stroke="#00d4ff" stroke-width="2"/>
-                            <path d="M80 100L95 115L120 85" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                            <defs>
-                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <button class="site-nav__toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-label">Menu</span>
+      </button>
 
-        <section id="services" class="services">
-    <div class="container">
-        <h2 class="section-title">Our Services</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <a href="security-assessment.html" class="service-link">
-                    <div class="service-icon">🛡️</div>
-                    <h3>Security Assessment</h3>
-                    <p>Comprehensive evaluation of your current security posture with detailed recommendations for improvement.</p>
-                </a>
-            </div>
-            <div class="service-card">
-                <a href="penetration-testing.html" class="service-link">
-                    <div class="service-icon">🔒</div>
-                    <h3>Penetration Testing</h3>
-                    <p>Ethical hacking services to identify vulnerabilities before malicious actors can exploit them.</p>
-                </a>
-            </div>
-            <div class="service-card">
-                <a href="security-monitoring.html" class="service-link">
-                    <div class="service-icon">📊</div>
-                    <h3>Security Monitoring</h3>
-                    <p>24/7 monitoring and incident response to keep your systems secure around the clock.</p>
-                </a>
-            </div>
-            <div class="service-card">
-                <a href="compliance-support.html" class="service-link">
-                    <div class="service-icon">⚙️</div>
-                    <h3>Compliance Support</h3>
-                    <p>Help your organization meet regulatory requirements and industry standards.</p>
-                </a>
-            </div>
-            <div class="service-card">
-                <a href="incident-response.html" class="service-link">
-                    <div class="service-icon">🚨</div>
-                    <h3>Incident Response</h3>
-                    <p>Rapid response and recovery services when security incidents occur.</p>
-                </a>
-            </div>
-            <div class="service-card">
-                <a href="#" class="service-link">
-                    <div class="service-icon"></div>
-                    <h3>Website/Web Application Development</h3>
-                    <p>Fast and secure Wordpress, Shopify, or Django sites/applications. </p>
-                </a>
-            </div>
-            <div class="service-card">
-                <a href="#" class="service-link">
-                    <div class="service-icon"></div>
-                    <h3>Custom Automations</h3>
-                    <p>We can automate your mundane or repetitious tasks for you!</p>
-                </a>
-            </div>
+      <ul class="site-nav__list" id="primary-menu">
+        <li class="site-nav__item"><a class="site-nav__link" href="#about">About</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="#experience">Experience</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="#projects">Projects</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="#skills">Skills</a></li>
+        <li class="site-nav__item"><a class="site-nav__link site-nav__link--accent" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page" id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__inner">
+        <div class="hero__content">
+          <p class="hero__eyebrow">Available for lorem ipsum opportunities</p>
+          <h1 class="hero__title" id="hero-title">Your Name</h1>
+          <p class="hero__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="hero__actions" aria-label="Resume actions">
+            <a class="button button--primary" href="#contact">Contact Me</a>
+            <a class="button button--secondary" href="#experience">View Resume</a>
+          </div>
         </div>
+
+        <aside class="hero__summary" aria-label="Professional summary">
+          <div class="hero__portrait" aria-hidden="true">
+            <span class="hero__portrait-initials">YN</span>
+          </div>
+          <dl class="hero__facts">
+            <div class="hero__fact">
+              <dt class="hero__fact-label">Role</dt>
+              <dd class="hero__fact-value">Lorem Ipsum Specialist</dd>
+            </div>
+            <div class="hero__fact">
+              <dt class="hero__fact-label">Location</dt>
+              <dd class="hero__fact-value">City, State</dd>
+            </div>
+            <div class="hero__fact">
+              <dt class="hero__fact-label">Focus</dt>
+              <dd class="hero__fact-value">Lorem, ipsum, dolor</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--intro" id="about" aria-labelledby="about-title">
+      <div class="section__inner section__inner--split">
+        <div class="section__heading">
+          <p class="section__eyebrow">Bio</p>
+          <h2 class="section__title" id="about-title">About Me</h2>
+        </div>
+        <div class="section__body">
+          <p class="section__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
+          <p class="section__text">Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience" aria-labelledby="experience-title">
+      <div class="section__inner">
+        <div class="section__heading section__heading--center">
+          <p class="section__eyebrow">Resume</p>
+          <h2 class="section__title" id="experience-title">Experience</h2>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline__item">
+            <div class="timeline__meta">
+              <span class="timeline__date">2024 - Present</span>
+              <span class="timeline__company">Company Name</span>
+            </div>
+            <div class="timeline__content">
+              <h3 class="timeline__title">Job Title</h3>
+              <p class="timeline__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.</p>
+              <ul class="timeline__list">
+                <li class="timeline__list-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                <li class="timeline__list-item">Praesent mauris fusce nec tellus sed augue semper porta.</li>
+                <li class="timeline__list-item">Vestibulum lacinia arcu eget nulla class aptent taciti.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="timeline__item">
+            <div class="timeline__meta">
+              <span class="timeline__date">2021 - 2024</span>
+              <span class="timeline__company">Company Name</span>
+            </div>
+            <div class="timeline__content">
+              <h3 class="timeline__title">Previous Job Title</h3>
+              <p class="timeline__description">Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.</p>
+              <ul class="timeline__list">
+                <li class="timeline__list-item">Maecenas mattis sed convallis tristique sem proin ut ligula.</li>
+                <li class="timeline__list-item">Integer lacinia sollicitudin massa cras metus sed aliquet risus.</li>
+                <li class="timeline__list-item">Curabitur tortor pellentesque nibh aenean quam in scelerisque.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="timeline__item">
+            <div class="timeline__meta">
+              <span class="timeline__date">2019 - 2021</span>
+              <span class="timeline__company">Company Name</span>
+            </div>
+            <div class="timeline__content">
+              <h3 class="timeline__title">Earlier Job Title</h3>
+              <p class="timeline__description">Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--muted" id="projects" aria-labelledby="projects-title">
+      <div class="section__inner">
+        <div class="section__heading section__heading--center">
+          <p class="section__eyebrow">Selected Work</p>
+          <h2 class="section__title" id="projects-title">Projects</h2>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card">
+            <p class="project-card__label">Project Type</p>
+            <h3 class="project-card__title">Project Name</h3>
+            <p class="project-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio praesent libero sed cursus.</p>
+          </article>
+
+          <article class="project-card">
+            <p class="project-card__label">Project Type</p>
+            <h3 class="project-card__title">Project Name</h3>
+            <p class="project-card__text">Duis sagittis ipsum praesent mauris fusce nec tellus sed augue semper porta mauris massa.</p>
+          </article>
+
+          <article class="project-card">
+            <p class="project-card__label">Project Type</p>
+            <h3 class="project-card__title">Project Name</h3>
+            <p class="project-card__text">Vestibulum lacinia arcu eget nulla class aptent taciti sociosqu ad litora torquent per conubia.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills" aria-labelledby="skills-title">
+      <div class="section__inner section__inner--split">
+        <div class="section__heading">
+          <p class="section__eyebrow">Capabilities</p>
+          <h2 class="section__title" id="skills-title">Skills</h2>
+        </div>
+        <div class="skills">
+          <ul class="skills__list" aria-label="Skill list">
+            <li class="skills__item">Lorem Ipsum</li>
+            <li class="skills__item">Dolor Sit</li>
+            <li class="skills__item">Amet Consectetur</li>
+            <li class="skills__item">Adipiscing Elit</li>
+            <li class="skills__item">Sed Do</li>
+            <li class="skills__item">Eiusmod Tempor</li>
+            <li class="skills__item">Incididunt</li>
+            <li class="skills__item">Ut Labore</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--contact" id="contact" aria-labelledby="contact-title">
+      <div class="section__inner">
+        <div class="contact-panel">
+          <div class="contact-panel__content">
+            <p class="section__eyebrow">Contact</p>
+            <h2 class="contact-panel__title" id="contact-title">Let's Connect</h2>
+            <p class="contact-panel__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Replace this with the best way to reach you.</p>
+          </div>
+          <address class="contact-panel__links">
+            <a class="contact-panel__link" href="mailto:you@example.com">you@example.com</a>
+            <a class="contact-panel__link" href="https://www.linkedin.com/" rel="noreferrer">LinkedIn</a>
+            <a class="contact-panel__link" href="https://github.com/" rel="noreferrer">GitHub</a>
+          </address>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p class="site-footer__text">&copy; 2026 Your Name. All rights reserved.</p>
+      <a class="site-footer__link" href="#top">Back to top</a>
     </div>
-</section>
+  </footer>
 
-        <section id="about" class="about">
-            <div class="container">
-                <div class="about-content">
-                    <div class="about-text">
-                        <h2 class="section-title">About Grounded Cyber</h2>
-                        <p>At Grounded Cyber, we believe that effective cybersecurity starts with a solid foundation. Our team of experienced security professionals provides practical, grounded solutions that protect your business without compromising productivity.</p>
-                        <p>We understand that every organization faces unique security challenges. That's why we take a personalized approach, working closely with our clients to develop tailored security strategies that align with their business objectives.</p>
-                        <div class="stats">
-                            <div class="stat">
-                                <h3>99.9%</h3>
-                                <p>Uptime Maintained</p>
-                            </div>
-                            <div class="stat">
-                                <h3>24/7</h3>
-                                <p>Monitoring</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="about-image">
-                        <div class="placeholder-image">
-                            <svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="400" height="300" fill="#1a1a2e" rx="8"/>
-                                <circle cx="200" cy="150" r="60" fill="#00d4ff" opacity="0.1"/>
-                                <circle cx="200" cy="150" r="40" fill="#00d4ff" opacity="0.2"/>
-                                <circle cx="200" cy="150" r="20" fill="#00d4ff" opacity="0.3"/>
-                                <text x="200" y="155" text-anchor="middle" fill="#00d4ff" font-family="Inter" font-size="14">Security</text>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact">
-            <div class="container">
-                <h2 class="section-title">Get In Touch</h2>
-                <div class="contact-content">
-                    <div class="contact-info">
-                        <h3>Ready to secure your business?</h3>
-                        <p>Contact us today for a free security consultation and learn how we can help protect your organization.</p>
-                        <div class="contact-details">
-                            <div class="contact-item">
-                                <strong>Email:</strong> groundedcyber@gmail.com
-                            </div>
-                            <div class="contact-item">
-                                <strong>Response Time:</strong> Within 24 hours
-                            </div>
-                        </div>
-                    </div>
-                    <form class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="company">Company</label>
-                            <input type="text" id="company" name="company">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>Grounded Cyber</h3>
-                    <p>Securing your digital future with practical, effective cybersecurity solutions.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="security-assessment.html">Security Assessment</a></li>
-                        <li><a href="penetration-testing.html">Penetration Testing</a></li>
-                        <li><a href="security-monitoring.html">Security Monitoring</a></li>
-                        <li><a href="compliance-support.html">Training</a></li>
-                        <li><a href="#services">Website/Web App Development</a></li>
-                        <li><a href="#services">Custom Automations</a></li>
-                    </ul>
-                </div>
-                <div class="footer-contact">
-                    <h4>Contact</h4>
-                    <p>groundedcyber@gmail.com</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Grounded Cyber. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
