@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Building an ESP32-S3 bicycle light and BLE remote: LED rendering, packet validation, sensor bring-up, and the path from bench hardware to an enclosure.">
+  <title>ESP32-S3 Bicycle Light | Derek Nolt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="site-nav__brand" href="index.html" aria-label="Derek Nolt home">
+        <span class="site-nav__mark" aria-hidden="true">DN</span>
+        <span class="site-nav__name">Derek Nolt</span>
+      </a>
+
+      <button class="site-nav__toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-label">Menu</span>
+      </button>
+
+      <ul class="site-nav__list" id="primary-menu">
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#about">About</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#experience">Experience</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#projects">Projects</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#skills">Skills</a></li>
+        <li class="site-nav__item"><a class="site-nav__link site-nav__link--accent" href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page" id="top">
+    <article class="section" aria-labelledby="post-title">
+      <div class="section__inner project-post">
+        <a class="site-footer__link" href="index.html#projects">&larr; All projects</a>
+        <header class="project-post__header">
+          <p class="section__eyebrow">Embedded Systems</p>
+          <h1 class="section__title" id="post-title">ESP32-S3 Bicycle Light</h1>
+          <p class="project-post__summary">Building an ESP32-S3 bicycle light and BLE remote: LED rendering, packet validation, sensor bring-up, and the path from bench hardware to an enclosure.</p>
+          <p class="project-post__byline">By Derek Nolt</p>
+        </header>
+        <div class="project-post__body">
+          <section aria-labelledby="post-section-1">
+            <h2 id="post-section-1">A bicycle light as an embedded-systems project</h2>
+            <p>This project pairs an ESP32-S3 bicycle light with a two-button handlebar remote. It brings together LED effects, wireless input, motion-sensor diagnostics, and custom hardware design. The current work is a bench prototype: remote-controlled lighting is implemented, while automatic brake detection and several production features remain unfinished.</p>
+            <p>The firmware uses C++17 with Arduino and PlatformIO, with shared protocol and utility code for the two devices. Separate build environments keep the digital strip, analog development LEDs, wireless experiments, and enclosure hardware from becoming one ambiguous configuration.</p>
+          </section>
+
+          <section aria-labelledby="post-section-2">
+            <h2 id="post-section-2">The bench hardware</h2>
+            <p>The physical digital prototype uses a 22-pixel WS2812B strip driven from GPIO18 through a 220-ohm series resistor. The sensor connects over I²C on GPIO9 and GPIO10. The handlebar remote uses active-low buttons on GPIO5 and GPIO6 with external 10-kilohm pull-ups.</p>
+            <p>The recorded bench setup powers the strip from a separate regulated 5 V supply and shares ground with the USB-powered ESP32. Direct 3.3 V data to the strip is a temporary bench arrangement; a 74HCT125 level shifter is planned. That distinction matters when moving from a working experiment to an electrical design that needs predictable margins.</p>
+          </section>
+
+          <section aria-labelledby="post-section-3">
+            <h2 id="post-section-3">Render frames without blocking the control logic</h2>
+            <p>The scheduler requests an LED frame every 17 ms and an IMU sample every 10 ms. Animation is calculated from state and time instead of a sequence of delays. The NeoPixel transfer is still synchronous, so this is not a claim that every operation runs asynchronously.</p>
+            <p>The renderer applies brightness scaling, gamma 2.0 correction, and a software current estimate. For the 22-pixel build, the default brightness is 24/255, the hard ceiling is 128/255, and the estimated LED budget is capped at 700 mA. The model assumes 1 mA idle per pixel and 20 mA per full-scale color channel. This is an estimate used to limit output, not a substitute for a measured current trace or a hardware protection circuit.</p>
+            <p>In the current digital wireless implementation, the light starts steady red. A left or right press latches an amber wave; pressing the same side cancels it and pressing the other side switches direction. Simultaneous presses toggle hazards. The wave moves outward from the center with a three-pixel fading tail and a 560 ms period.</p>
+          </section>
+
+          <section aria-labelledby="post-section-4">
+            <h2 id="post-section-4">A six-byte BLE message</h2>
+            <p>The development BLE protocol carries the current button state and a sequence number. Its compact layout makes validation explicit:</p>
+            <pre tabindex="0"><code>Offset  Size  Meaning
+0       2     ASCII signature: BL
+2       1     Protocol version: 1
+3       1     Button mask: two low bits
+4       2     Sequence number: little-endian uint16</code></pre>
+            <p>The receiver checks length, signature, version, and allowed button bits. It uses wrap-aware sequence comparison to reject duplicate or older packets. The remote publishes approximately every 100 ms from a FreeRTOS task. A 600 ms freshness lease prevents an old button state from being treated as a new input.</p>
+            <p>Buttons are debounced for 30 ms, and both must be released after startup or reconnection before new input takes effect. The current digital light intentionally keeps a latched turn active through release or disconnection. Input freshness and the displayed signal are separate state decisions. Development BLE is currently unbonded; authenticated production pairing, stored peer identity, and application-level acknowledgements remain future work.</p>
+          </section>
+
+          <section aria-labelledby="post-section-5">
+            <h2 id="post-section-5">The sensor identity check caught a real mismatch</h2>
+            <p>One of the more useful debugging moments came from a breakout presented as an MPU6050. It responded at I²C address <code>0x68</code>, but its <code>WHO_AM_I</code> register returned <code>0x74</code>, rather than the expected <code>0x68</code>. The firmware rejected that identity instead of silently treating a responding address as proof of the expected sensor.</p>
+            <p>Support for the MPU6515 variant was then added. The project records include 67 fresh finite samples from an early bench capture and 301 fresh samples from a later stationary calibration. Sensor communication and calibration are milestones, but they do not establish reliable braking detection on a moving bicycle.</p>
+            <p>Another bench failure produced I²C NACKs because the ESP32 had been removed from the perfboard. Reseating it restored the expected identity and samples alongside LED frames. That is a useful reminder to verify the physical test arrangement before changing a driver.</p>
+          </section>
+
+          <section aria-labelledby="post-section-6">
+            <h2 id="post-section-6">What has been checked, and what still needs the bike</h2>
+            <p>The repository records 48 native tests passing for the later wireless changes, along with bench logs showing increasing accepted BLE packets, zero rejected packets in that capture, and valid IMU samples. These are recorded results from the project, not new hardware tests performed for this article.</p>
+            <p>Automatic braking, motion wake and sleep, measured battery runtime, and assembled-device radio range still need implementation or validation. A successful desk test does not answer how the light behaves under vibration, changing orientation, weather, or a weak wireless link.</p>
+          </section>
+
+          <section aria-labelledby="post-section-7">
+            <h2 id="post-section-7">Moving toward a custom enclosure</h2>
+            <p>The next hardware revision has editable KiCad and FreeCAD designs for a compact enclosure with a bonded plexiglass face, gasket, rear-access screws, and a mounted PCB. It targets an ESP32-S3-WROOM-1-N16R8, 32 low-current WS2812C-2020 LEDs, and an LSM6DSOX motion sensor through a separate <code>light_enclosure</code> firmware target.</p>
+            <p>That target uses its own LED current model and sensor configuration rather than inheriting the bench strip’s assumptions. The mechanical and PCB files describe a designed prototype, not a finished, environmentally validated product. Keeping those revisions explicit makes the next round of bring-up easier to reason about.</p>
+          </section>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p class="site-footer__text">&copy; 2026 Derek Nolt. All rights reserved.</p>
+      <a class="site-footer__link" href="#top">Back to top</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

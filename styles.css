@@ -452,6 +452,10 @@ a {
   gap: 18px;
 }
 
+.project-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .project-card,
 .credential-card {
   min-height: 240px;
@@ -532,6 +536,39 @@ a {
   color: #b7c9be;
   font-size: 1.08rem;
   line-height: 1.8;
+}
+
+.project-post__body p + p,
+.project-post__body pre + p {
+  margin-top: 18px;
+}
+
+.project-post__body a {
+  color: var(--color-accent);
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+
+.project-post__body code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.88em;
+  overflow-wrap: anywhere;
+}
+
+.project-post__body pre {
+  max-width: 100%;
+  margin: 22px 0;
+  padding: 20px;
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-small);
+  background: var(--color-panel);
+  color: var(--color-ink);
+  line-height: 1.7;
+}
+
+.project-post__body pre code {
+  overflow-wrap: normal;
 }
 
 .skills__list {

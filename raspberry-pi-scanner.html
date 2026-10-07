@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Building a small, headless check-in kiosk with Python, a Raspberry Pi, and reliable offline queuing.">
+  <meta name="description" content="Inside a Raspberry Pi check-in kiosk: camera processing, QR decoding, SQLite durability, asynchronous API delivery, and measured performance.">
   <title>Raspberry Pi QR Scanner | Derek Nolt</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,28 +42,69 @@
         <header class="project-post__header">
           <p class="section__eyebrow">Hardware &amp; Automation</p>
           <h1 class="section__title" id="post-title">Raspberry Pi QR Scanner</h1>
-          <p class="project-post__summary">Building a small, headless check-in kiosk with Python, a Raspberry Pi, and reliable offline queuing.</p>
+          <p class="project-post__summary">Inside a Raspberry Pi check-in kiosk: camera processing, QR decoding, SQLite durability, asynchronous API delivery, and measured performance.</p>
           <p class="project-post__byline">By Derek Nolt</p>
         </header>
         <div class="project-post__body">
           <section aria-labelledby="post-section-1">
-            <h2 id="post-section-1">A practical check-in tool</h2>
-            <p>This project turns a Raspberry Pi Zero 2 W into a QR badge scanner for the Ohio Furniture Market. A Camera Module 3 Wide reads attendee badges, and a Python application sends the check-in data to an authenticated API. There is no screen or browser interface: LEDs and a buzzer provide feedback at the scanner.</p>
+            <h2 id="post-section-1">A kiosk with a simple job and several moving parts</h2>
+            <p>The scanner is a headless check-in kiosk for the Ohio Furniture Market. A Raspberry Pi Zero 2 W and Camera Module 3 Wide read attendee QR badges, while Python handles decoding, local persistence, and delivery to the check-in API. Three traffic-light LEDs, a 60-pixel WS281x strip, and a passive buzzer provide the operating interface.</p>
+            <p>The interesting engineering problem is keeping those parts independent. A badge can be in view while a previous API request is still running. A buzzer can be sounding while another frame arrives. A network outage should not turn a locally recorded scan into an invisible failure.</p>
           </section>
 
           <section aria-labelledby="post-section-2">
-            <h2 id="post-section-2">Keeping the camera moving</h2>
-            <p>Reading a badge is only one part of the job. Camera capture, QR decoding, API requests, and hardware feedback run independently so a slow network response or a buzzer pattern does not hold up the next scan. The capture buffer keeps the newest frame instead of building up a backlog of old images.</p>
+            <h2 id="post-section-2">Keep frames fresh instead of building a backlog</h2>
+            <p>Picamera2 captures YUV420 frames. The capture worker copies the luminance plane needed for QR decoding and releases the camera request before the decoder starts work. A one-slot buffer keeps the latest frame: if the decoder falls behind, a newer image replaces the waiting image rather than joining a growing queue.</p>
+            <p>The decoder searches a center crop first. If that misses, it immediately tries the full frame; it also searches the full frame every third processed frame even after a crop succeeds. That periodic wider search helps find badges outside the center. The source supports both pyzbar and an optional ZXing backend, restricted to QR codes.</p>
+            <pre tabindex="0"><code>Camera → latest luminance frame → QR decoder
+                                  ↓
+                         bounded persistence queue
+                                  ↓
+                            SQLite commit
+                             ↙          ↘
+                    local feedback    API workers
+                                          ↓
+                                confirmation or retry</code></pre>
           </section>
 
           <section aria-labelledby="post-section-3">
-            <h2 id="post-section-3">Planning for an unreliable connection</h2>
-            <p>Valid scans are saved to a local SQLite outbox before submission. If the API is unavailable, the scanner queues them for retry when connectivity returns. Duplicate handling reduces repeated submissions while a badge remains in view. Local capture feedback is separate from API confirmation, so recording a scan does not have to wait for the network.</p>
+            <h2 id="post-section-3">Source defaults and the installed configuration</h2>
+            <p>The source defaults request 640 × 480 capture at 30 FPS, a 384 × 384 center crop, pyzbar decoding, and manual focus. The installed kiosk profile documented on October 7, 2026 uses 1280 × 960 capture, a 768-pixel crop, ZXing, and continuous autofocus with full range and fast speed. Requested camera FPS is a configuration value, not a measurement of completed scans per second.</p>
+            <pre tabindex="0"><code>SCANNER_WIDTH=1280
+SCANNER_HEIGHT=960
+SCANNER_CROP_SIZE=768
+SCANNER_DECODER=zxingcpp
+SCANNER_FOCUS_MODE=continuous
+SCANNER_AF_RANGE=full
+SCANNER_AF_SPEED=fast</code></pre>
+            <p>Camera settings live in configuration rather than being scattered through the application. Capture, decoding, persistence, feedback, and metrics also have separate modules, which makes it easier to tune one part without changing the API contract.</p>
           </section>
 
           <section aria-labelledby="post-section-4">
-            <h2 id="post-section-4">More than a script</h2>
-            <p>The scanner can run as a systemd service and restart after a crash or reboot. Bringing together camera processing, GPIO feedback, persistence, and service management makes this a useful example of the work I enjoy: connecting software to physical hardware to solve a practical problem.</p>
+            <h2 id="post-section-4">A recorded scan is different from a confirmed check-in</h2>
+            <p>A valid badge enters a bounded persistence queue with 20 slots. The persistence worker commits it to a SQLite outbox before producing the local SAVED feedback: a brief green strip flash and two beeps. That feedback means the scan is recorded locally. Server confirmation happens afterward.</p>
+            <p>If the persistence queue is full, the scanner reports a busy condition rather than pretending to accept the badge. This is a deliberate boundary: a frame that was decoded but never committed is not a durable scan. Items still waiting in memory can be lost during abrupt power loss.</p>
+            <p>The QR parser extracts the first <code>company_id</code> and <code>attendee</code> query values. The application sends those with a <code>scanner_id</code> in a JSON POST to a configured endpoint, using an <code>X-Scanner-Token</code> header. Two API workers normally run with reusable HTTP sessions. The scanned URL itself is not fetched; its host and path are not currently validated by the payload parser.</p>
+          </section>
+
+          <section aria-labelledby="post-section-5">
+            <h2 id="post-section-5">Recovery, retries, and duplicate delivery</h2>
+            <p>Retryable outcomes stay in the outbox, with exponential retry delays starting at five seconds and capped at five minutes. On restart, pending records are available for replay. Definitive responses remove the corresponding outbox entry. A unique payload constraint prevents multiple pending copies of the same badge.</p>
+            <p>Delivery is at least once. If the API accepts a check-in and the kiosk loses power before recording that outcome, the same record can be sent again. The server therefore needs idempotent check-in handling. Local deduplication reduces repeats, but cannot replace that server-side rule.</p>
+            <p>A separate in-memory history is bounded to 10,000 payloads and 24 hours; it resets when the program restarts. Operational logs use a shortened SHA-256 fingerprint instead of printing the complete badge payload. The SQLite outbox still contains badge data: owner-only file permissions restrict access but do not encrypt it.</p>
+          </section>
+
+          <section aria-labelledby="post-section-6">
+            <h2 id="post-section-6">What the documented measurements actually show</h2>
+            <p>The project notes record five repeated decodes of one saved 1280 × 960 badge frame. ZXing had a median decode time of 16.6 ms, compared with 154.5 ms for pyzbar using the scaled center crop, and both returned the same payload. This compares decoders on that image; it is not a general throughput or reliability benchmark.</p>
+            <p>A separate five-presentation walk-up test successfully read all five presentations, with a mean GO-cue-to-first-read time of 1.146 seconds. Those timings include the person’s reaction and badge movement. They do not isolate autofocus time. A stationary lighting comparison read 226/226 frames with white illumination and 228/228 with the strip off, with medians around 14 ms; that does not establish performance for moving badges or other rooms.</p>
+            <p>These are previously documented project measurements, not new benchmarks run for this article. The distinction matters: decoding a saved image, acquiring a moving badge, and waiting for a server reply measure different parts of the experience.</p>
+          </section>
+
+          <section aria-labelledby="post-section-7">
+            <h2 id="post-section-7">Testing the failure paths</h2>
+            <p>Hardware-independent tests cover the commit-before-feedback boundary, a blocked API while new scans continue saving, queue backpressure, retry recovery, and shutdown behavior. Metrics separate capture, decoding, persistence, API, and feedback latency rather than combining them into one number.</p>
+            <p>The application can run under systemd for restart after failure or reboot. The main lesson from the design is to make each state observable: seeing a QR code, saving a scan, and confirming a check-in are separate events, and the software and physical feedback should preserve that distinction.</p>
           </section>
         </div>
       </div>

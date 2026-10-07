@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Connecting hands-on security research with endpoint monitoring, email security, and incident response.">
+  <meta name="description" content="How I connect security research, endpoint and email evidence, lab validation, and practical incident response.">
   <title>Threat Detection &amp; Research | Derek Nolt</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,28 +42,40 @@
         <header class="project-post__header">
           <p class="section__eyebrow">Security Research</p>
           <h1 class="section__title" id="post-title">Threat Detection &amp; Research</h1>
-          <p class="project-post__summary">Connecting hands-on security research with endpoint monitoring, email security, and incident response.</p>
+          <p class="project-post__summary">How I connect security research, endpoint and email evidence, lab validation, and practical incident response.</p>
           <p class="project-post__byline">By Derek Nolt</p>
         </header>
         <div class="project-post__body">
           <section aria-labelledby="post-section-1">
-            <h2 id="post-section-1">Connecting attacks to evidence</h2>
-            <p>My interest in security research is rooted in a practical question: what does suspicious activity look like from the defender’s side? Understanding an attack technique is useful, but connecting it to logs, alerts, and the affected systems is what makes that knowledge useful during an investigation.</p>
+            <h2 id="post-section-1">Start with a question the evidence can answer</h2>
+            <p>My security work includes configuring Wazuh and Microsoft 365 Defender, maintaining IT infrastructure, and helping restore operations after a ransomware incident. The research side of that work is about understanding how activity becomes visible: what a system records, what an alert means, and what remains unknown.</p>
+            <p>A useful investigation needs a specific question. An unexpected process, a suspicious email, and a new network connection may be related, but their proximity alone does not establish a chain of events. The goal is to build an explanation that can be checked against the available records.</p>
           </section>
 
           <section aria-labelledby="post-section-2">
-            <h2 id="post-section-2">Tools in context</h2>
-            <p>My work includes setting up Wazuh and Microsoft 365 Defender for endpoint and email monitoring. These tools provide different views of an environment. An alert is a starting point for understanding what happened, which systems were involved, and whether the activity fits normal behavior.</p>
+            <h2 id="post-section-2">Build a timeline before drawing a conclusion</h2>
+            <p>For endpoint activity, useful fields to look for include the device, account, timestamp, process name, parent process, command line, and any associated destination or file hash. Availability depends on the telemetry and configuration. For email, the analogous context includes the recipient, message identifiers, delivery information, and the URLs or attachments involved.</p>
+            <p>A practical timeline keeps the raw event time and its time zone alongside a normalized time. It also records the source of each observation. That makes it possible to revisit an apparent sequence without confusing when something happened with when an alert was generated or reviewed.</p>
+            <pre tabindex="0"><code>Time (UTC) | Source | Device / account | Observation | Evidence reference
+[time]     | [log]  | [entity]         | [fact]      | [event or capture ID]</code></pre>
           </section>
 
           <section aria-labelledby="post-section-3">
-            <h2 id="post-section-3">Learning through lab work</h2>
-            <p>Hack The Box Academy and home lab work support my ongoing study of bug bounty methodology, Active Directory, and network environments. These areas connect to the systems I work with in IT operations and give me room to explore how configuration choices affect security.</p>
+            <h2 id="post-section-3">Use lab work to test an explanation</h2>
+            <p>Hack The Box Academy and home lab work support my study of Active Directory, network environments, and bug bounty methodology. A lab is useful for asking a narrow question and repeating the same action while observing its traces. It also makes it easier to identify missing telemetry before relying on it during an incident.</p>
+            <p>A repeatable exercise records the starting configuration, the action, the expected evidence, and the observed result. If an expected event is absent, check collection and parsing before treating that absence as proof that the action did not happen. A test result should describe the environment it actually covers.</p>
           </section>
 
           <section aria-labelledby="post-section-4">
-            <h2 id="post-section-4">Keeping the focus on response</h2>
-            <p>Helping restore operations after a ransomware incident reinforced the connection between monitoring and hands-on troubleshooting. My research interests follow that same direction: understand the path an attacker could take, recognize useful evidence, and connect the findings to changes that help protect the environment.</p>
+            <h2 id="post-section-4">From an alert to a detection hypothesis</h2>
+            <p>Consider a hypothetical alert involving a command interpreter. The process name alone provides little context: administrators and business software use those tools too. Parent process, command line, account, and nearby activity can help distinguish an ordinary task from something that needs investigation. This is an example of the reasoning process, not a claim about a specific incident.</p>
+            <p>The next step is to state a detection hypothesis and test both suspicious and ordinary examples. Document why a condition was selected, which legitimate workflows might match it, and what evidence would justify escalation. An exception should be narrow enough that its purpose remains understandable when someone revisits it later.</p>
+          </section>
+
+          <section aria-labelledby="post-section-5">
+            <h2 id="post-section-5">Connect investigation to recovery</h2>
+            <p>Helping with ransomware recovery tied security monitoring directly to operations for me. Identifying the compromise path, removing the attack vector, and restoring service require both technical evidence and an understanding of how the environment is used.</p>
+            <p>That experience shapes the questions I want research to answer: which records would help reconstruct the event, which controls would interrupt the path, and how would we verify the environment after remediation? The useful output is a finding or improvement that another person can understand, reproduce, and act on.</p>
           </section>
         </div>
       </div>
