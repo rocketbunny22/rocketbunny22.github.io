@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Building a small, headless check-in kiosk with Python, a Raspberry Pi, and reliable offline queuing.">
+  <title>Raspberry Pi QR Scanner | Derek Nolt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="site-nav__brand" href="index.html" aria-label="Derek Nolt home">
+        <span class="site-nav__mark" aria-hidden="true">DN</span>
+        <span class="site-nav__name">Derek Nolt</span>
+      </a>
+
+      <button class="site-nav__toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-label">Menu</span>
+      </button>
+
+      <ul class="site-nav__list" id="primary-menu">
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#about">About</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#experience">Experience</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#projects">Projects</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#skills">Skills</a></li>
+        <li class="site-nav__item"><a class="site-nav__link site-nav__link--accent" href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page" id="top">
+    <article class="section" aria-labelledby="post-title">
+      <div class="section__inner project-post">
+        <a class="site-footer__link" href="index.html#projects">&larr; All projects</a>
+        <header class="project-post__header">
+          <p class="section__eyebrow">Hardware &amp; Automation</p>
+          <h1 class="section__title" id="post-title">Raspberry Pi QR Scanner</h1>
+          <p class="project-post__summary">Building a small, headless check-in kiosk with Python, a Raspberry Pi, and reliable offline queuing.</p>
+          <p class="project-post__byline">By Derek Nolt</p>
+        </header>
+        <div class="project-post__body">
+          <section aria-labelledby="post-section-1">
+            <h2 id="post-section-1">A practical check-in tool</h2>
+            <p>This project turns a Raspberry Pi Zero 2 W into a QR badge scanner for the Ohio Furniture Market. A Camera Module 3 Wide reads attendee badges, and a Python application sends the check-in data to an authenticated API. There is no screen or browser interface: LEDs and a buzzer provide feedback at the scanner.</p>
+          </section>
+
+          <section aria-labelledby="post-section-2">
+            <h2 id="post-section-2">Keeping the camera moving</h2>
+            <p>Reading a badge is only one part of the job. Camera capture, QR decoding, API requests, and hardware feedback run independently so a slow network response or a buzzer pattern does not hold up the next scan. The capture buffer keeps the newest frame instead of building up a backlog of old images.</p>
+          </section>
+
+          <section aria-labelledby="post-section-3">
+            <h2 id="post-section-3">Planning for an unreliable connection</h2>
+            <p>Valid scans are saved to a local SQLite outbox before submission. If the API is unavailable, the scanner queues them for retry when connectivity returns. Duplicate handling reduces repeated submissions while a badge remains in view. Local capture feedback is separate from API confirmation, so recording a scan does not have to wait for the network.</p>
+          </section>
+
+          <section aria-labelledby="post-section-4">
+            <h2 id="post-section-4">More than a script</h2>
+            <p>The scanner can run as a systemd service and restart after a crash or reboot. Bringing together camera processing, GPIO feedback, persistence, and service management makes this a useful example of the work I enjoy: connecting software to physical hardware to solve a practical problem.</p>
+          </section>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p class="site-footer__text">&copy; 2026 Derek Nolt. All rights reserved.</p>
+      <a class="site-footer__link" href="#top">Back to top</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Connecting hands-on security research with endpoint monitoring, email security, and incident response.">
+  <title>Threat Detection &amp; Research | Derek Nolt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="site-nav__brand" href="index.html" aria-label="Derek Nolt home">
+        <span class="site-nav__mark" aria-hidden="true">DN</span>
+        <span class="site-nav__name">Derek Nolt</span>
+      </a>
+
+      <button class="site-nav__toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-label">Menu</span>
+      </button>
+
+      <ul class="site-nav__list" id="primary-menu">
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#about">About</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#experience">Experience</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#projects">Projects</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="index.html#skills">Skills</a></li>
+        <li class="site-nav__item"><a class="site-nav__link site-nav__link--accent" href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page" id="top">
+    <article class="section" aria-labelledby="post-title">
+      <div class="section__inner project-post">
+        <a class="site-footer__link" href="index.html#projects">&larr; All projects</a>
+        <header class="project-post__header">
+          <p class="section__eyebrow">Security Research</p>
+          <h1 class="section__title" id="post-title">Threat Detection &amp; Research</h1>
+          <p class="project-post__summary">Connecting hands-on security research with endpoint monitoring, email security, and incident response.</p>
+          <p class="project-post__byline">By Derek Nolt</p>
+        </header>
+        <div class="project-post__body">
+          <section aria-labelledby="post-section-1">
+            <h2 id="post-section-1">Connecting attacks to evidence</h2>
+            <p>My interest in security research is rooted in a practical question: what does suspicious activity look like from the defender’s side? Understanding an attack technique is useful, but connecting it to logs, alerts, and the affected systems is what makes that knowledge useful during an investigation.</p>
+          </section>
+
+          <section aria-labelledby="post-section-2">
+            <h2 id="post-section-2">Tools in context</h2>
+            <p>My work includes setting up Wazuh and Microsoft 365 Defender for endpoint and email monitoring. These tools provide different views of an environment. An alert is a starting point for understanding what happened, which systems were involved, and whether the activity fits normal behavior.</p>
+          </section>
+
+          <section aria-labelledby="post-section-3">
+            <h2 id="post-section-3">Learning through lab work</h2>
+            <p>Hack The Box Academy and home lab work support my ongoing study of bug bounty methodology, Active Directory, and network environments. These areas connect to the systems I work with in IT operations and give me room to explore how configuration choices affect security.</p>
+          </section>
+
+          <section aria-labelledby="post-section-4">
+            <h2 id="post-section-4">Keeping the focus on response</h2>
+            <p>Helping restore operations after a ransomware incident reinforced the connection between monitoring and hands-on troubleshooting. My research interests follow that same direction: understand the path an attacker could take, recognize useful evidence, and connect the findings to changes that help protect the environment.</p>
+          </section>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p class="site-footer__text">&copy; 2026 Derek Nolt. All rights reserved.</p>
+      <a class="site-footer__link" href="#top">Back to top</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
