@@ -1,32 +1,9 @@
-# Grounded Cyber Website
+# Derek Nolt portfolio
 
-A professional static website for Grounded Cyber, a cybersecurity company. This website is designed to be hosted on GitHub Pages.
+This Next.js site exports static files for Cloudflare Pages. Original page content is retained in `content/pages.json`; styles and scripts are in `public`. The original HTML files remain in the repository while the GitHub Pages site is still active.
 
-## Features
+Use Node 22.16 or later. Run `npm ci`, `npm run dev`, `npm run lint`, or `npm run build`. The build is written to `out`.
 
-- **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
-- **Modern UI**: Clean, professional design with cybersecurity theme
-- **Static Site**: No server-side dependencies, perfect for GitHub Pages
-- **SEO Friendly**: Semantic HTML structure and meta tags
-- **Contact Form**: Interactive contact form with validation
-- **Smooth Animations**: Subtle animations and transitions
+Pushes to `main` run `.github/workflows/deploy.yml`, which builds and deploys to the `derek-portfolio` Cloudflare Pages project. Add a GitHub Actions repository secret named `CLOUDFLARE_API_TOKEN` containing a Cloudflare API token with Pages edit access to this account. The workflow can also be run manually from the Actions tab. The custom domain is `derek.groundedcyber.com`.
 
-## Sections
-
-- **Hero**: Eye-catching introduction with call-to-action
-- **Services**: Overview of cybersecurity services offered
-- **About**: Company information and statistics
-- **Contact**: Contact form and company details
-- **Footer**: Additional links and information
-
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## License
-
-This website template is free to use and modify for your business needs.
+The original site contains a home-lab placeholder and legacy service links that should be reviewed.
