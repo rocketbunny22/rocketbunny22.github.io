@@ -23,6 +23,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      - run: npm test
       - run: npm run build
       - name: Deploy to Cloudflare Pages
         run: npx wrangler pages deploy out --project-name derek-portfolio --branch main
